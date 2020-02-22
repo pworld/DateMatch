@@ -10,30 +10,38 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  photoUrl: string;
 
-  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) {
+  }
 
   ngOnInit() {
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   login() {
-    this.authService.login(this.model).subscribe(next => {
-      this.alertify.success('Logged in succesfully');
+    this.authService.login(this.model).subscribe(res => {
+      this.alertify.success('logged in successfully');
     }, error => {
+
       this.alertify.error('Failed to login');
-    // default navigate
+      console.log(error);
     }, () => {
       this.router.navigate(['/members']);
     });
   }
 
-  loggedin() {
-    return this.authService.loggedIn();
+  loggedIn() {
+    return this.authService.isLoggedIn();
   }
 
-  loggedout() {
-    const token = localStorage.removeItem('token');
-    this.alertify.message('Logged out');
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authService.decodedToken = null;
+    this.authService.currentUser = null;
+    this.alertify.message('logged out');
     this.router.navigate(['/home']);
   }
+
 }

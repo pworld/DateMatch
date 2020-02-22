@@ -15,7 +15,8 @@ export const appRoutes: Routes = [
     { path: 'home', component: HomeComponent },
     {
         path: '',
-        runGuardsAndResolvers: 'always',
+        // Error: Outlet is not activated
+        // runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children: [
             { path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver} },

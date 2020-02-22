@@ -1,5 +1,7 @@
 # DateMatch
 
+This application use https://github.com/pworld/DateMatch.App as Backend using ASP .NET CORE 2.1, SQLITE, and cloudinary as image storing
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
 
 ## Development server
